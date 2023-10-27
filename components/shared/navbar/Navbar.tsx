@@ -1,6 +1,8 @@
 import { SignedIn, UserButton } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import GlobalSearch from '../search/GlobalSearch';
+import MobileNav from './MobileNav';
 import Theme from './Theme';
 
 const Navbar = () => {
@@ -18,7 +20,7 @@ const Navbar = () => {
           <span className="text-primary-500">Sync</span>
         </p>
       </Link>
-      Global Search
+      <GlobalSearch />
       <div className="flex-between gap-5">
         <Theme />
         <SignedIn>
@@ -34,6 +36,7 @@ const Navbar = () => {
             }}
           />
         </SignedIn>
+        <MobileNav />
       </div>
     </nav>
   );
