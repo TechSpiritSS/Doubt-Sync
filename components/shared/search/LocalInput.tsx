@@ -11,7 +11,7 @@ const LocalInput = ({ placeholder }: LocalInputProps) => {
     <Input
       type="text"
       placeholder={placeholder}
-      value={''}
+      //   value={''}
       onChange={() => {}}
       className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none"
     />

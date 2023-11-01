@@ -26,11 +26,11 @@ const hotQuestions = [
 ];
 
 const PopularTags = [
-  { _id: 1, name: 'Next.js', totalQuestions: 76 },
-  { _id: 2, name: 'React.js', totalQuestions: 96 },
-  { _id: 3, name: 'Tailwind CSS', totalQuestions: 17 },
-  { _id: 4, name: 'GraphQL', totalQuestions: 50 },
-  { _id: 5, name: 'Apollo', totalQuestions: 10 },
+  { _id: '1', name: 'Next.js', totalQuestions: 76 },
+  { _id: '2', name: 'React.js', totalQuestions: 96 },
+  { _id: '3', name: 'Tailwind CSS', totalQuestions: 17 },
+  { _id: '4', name: 'GraphQL', totalQuestions: 50 },
+  { _id: '5', name: 'Apollo', totalQuestions: 10 },
 ];
 
 const RightSidebar = () => {
