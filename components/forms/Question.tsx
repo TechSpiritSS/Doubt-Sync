@@ -3,6 +3,8 @@
 import { Input } from '@/components/ui/input';
 import { QuestionsSchema } from '@/lib/validations';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Editor } from '@tinymce/tinymce-react';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '../ui/button';
@@ -17,6 +19,8 @@ import {
 } from '../ui/form';
 
 const Question = () => {
+  const editorRef = useRef(null);
+
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
@@ -68,7 +72,42 @@ const Question = () => {
                 Detailed Explanation of your Question
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl className="mt-3.5">{/* Editor */}</FormControl>
+              <FormControl className="mt-3.5">
+                <Editor
+                  apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+                  onInit={(evt, editor) => {
+                    // @ts-ignore
+                    editorRef.current = editor;
+                  }}
+                  initialValue=""
+                  init={{
+                    height: 350,
+                    menubar: false,
+                    plugins: [
+                      'advlist',
+                      'autolink',
+                      'lists',
+                      'link',
+                      'image',
+                      'charmap',
+                      'preview',
+                      'anchor',
+                      'searchreplace',
+                      'visualblocks',
+                      'codesample',
+                      'fullscreen',
+                      'insertdatetime',
+                      'media',
+                      'table',
+                    ],
+                    toolbar:
+                      'undo redo | ' +
+                      'codesample | bold italic forecolor | alignleft aligncenter |' +
+                      'alignright alignjustify | bullist numlist',
+                    content_style: 'body { font-family:Inter; font-size:16px }',
+                  }}
+                />
+              </FormControl>
 
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Explain your Question in detail
