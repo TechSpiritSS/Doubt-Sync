@@ -6,6 +6,7 @@ import { QuestionsSchema } from '@/lib/validations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Editor } from '@tinymce/tinymce-react';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -23,9 +24,16 @@ import {
 
 const type: any = 'create';
 
-const Question = () => {
+interface QuestionProps {
+  mongoDbUserId: string;
+}
+
+const Question = ({ mongoDbUserId }: QuestionProps) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
+  const pathName = usePathname();
 
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -41,7 +49,15 @@ const Question = () => {
     console.log(data);
 
     try {
-      await createQuestion({});
+      await createQuestion({
+        title: data.title,
+        content: data.explanation,
+        tags: data.tags,
+        author: JSON.parse(mongoDbUserId),
+        path: pathName,
+      });
+
+      router.push('/');
     } catch (error) {
     } finally {
       setIsSubmitting(false);
