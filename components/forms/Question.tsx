@@ -1,6 +1,7 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
+import { createQuestion } from '@/lib/actions/question.action';
 import { QuestionsSchema } from '@/lib/validations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Editor } from '@tinymce/tinymce-react';
@@ -35,12 +36,12 @@ const Question = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(data: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
     console.log(data);
 
     try {
-      // create / edit question
+      await createQuestion({});
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -126,6 +127,8 @@ const Question = () => {
                     editorRef.current = editor;
                   }}
                   initialValue=""
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   init={{
                     height: 350,
                     menubar: false,
