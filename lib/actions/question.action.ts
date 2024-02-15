@@ -3,6 +3,7 @@
 import Question from '@/model/question.model';
 import Tag from '@/model/tag.model';
 import User from '@/model/user.model';
+import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '../moongose';
 import { CreateQuestionParams, GetQuestionsParams } from './shared.types';
 
@@ -18,8 +19,8 @@ export async function getQuestions(params: GetQuestionsParams) {
       .populate({
         path: 'author',
         model: User,
-      });
-
+      })
+      .sort({ createdAt: -1 });
     return { questions };
   } catch (error) {
     console.error(error);
@@ -31,7 +32,7 @@ export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToDatabase();
 
-    const { title, content, tags, author } = params;
+    const { title, content, tags, author, path } = params;
 
     const question = await Question.create({
       title,
@@ -74,6 +75,8 @@ export async function createQuestion(params: CreateQuestionParams) {
     });
 
     // Reputation
+
+    revalidatePath(path);
   } catch (error) {
     console.error(error);
   }
