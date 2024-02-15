@@ -5,57 +5,63 @@ import NoResult from '@/components/shared/NoResult';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { Button } from '@/components/ui/button';
 import { HomePageFilters } from '@/constants/filters';
+import { getQuestions } from '@/lib/actions/question.action';
 import Link from 'next/link';
 
-const questions = [
-  {
-    _id: '1',
-    title: 'How to create a React component?',
-    tags: [
-      { _id: 'tag1', name: 'React' },
-      { _id: 'tag2', name: 'JavaScript' },
-    ],
-    author: {
-      _id: 'author1',
-      name: 'John Doe',
-      picture: 'john-doe.jpg',
-    },
-    upvotes: 10,
-    views: 150,
-    answers: [
-      {
-        answerId: 'answer1',
-        text: 'You can create a React component by using the "class" or "function" component syntax.',
-        author: {
-          _id: 'author2',
-          name: 'Jane Smith',
-          picture: 'jane-smith.jpg',
-        },
-        createdAt: new Date('2023-10-30'),
-      },
-    ],
-    createdAt: new Date('2023-10-28'),
-  },
-  {
-    _id: '2',
-    title: 'What is JavaScript closure?',
-    tags: [
-      { _id: 'tag3', name: 'JavaScript' },
-      { _id: 'tag4', name: 'Closures' },
-    ],
-    author: {
-      _id: 'author3',
-      name: 'Alice Johnson',
-      picture: 'alice-johnson.jpg',
-    },
-    upvotes: 8,
-    views: 100,
-    answers: [],
-    createdAt: new Date('2023-10-29'),
-  },
-];
+// const questions = [
+//   {
+//     _id: '1',
+//     title: 'How to create a React component?',
+//     tags: [
+//       { _id: 'tag1', name: 'React' },
+//       { _id: 'tag2', name: 'JavaScript' },
+//     ],
+//     author: {
+//       _id: 'author1',
+//       name: 'John Doe',
+//       picture: 'john-doe.jpg',
+//     },
+//     upvotes: 10,
+//     views: 150,
+//     answers: [
+//       {
+//         answerId: 'answer1',
+//         text: 'You can create a React component by using the "class" or "function" component syntax.',
+//         author: {
+//           _id: 'author2',
+//           name: 'Jane Smith',
+//           picture: 'jane-smith.jpg',
+//         },
+//         createdAt: new Date('2023-10-30'),
+//       },
+//     ],
+//     createdAt: new Date('2023-10-28'),
+//   },
+//   {
+//     _id: '2',
+//     title: 'What is JavaScript closure?',
+//     tags: [
+//       { _id: 'tag3', name: 'JavaScript' },
+//       { _id: 'tag4', name: 'Closures' },
+//     ],
+//     author: {
+//       _id: 'author3',
+//       name: 'Alice Johnson',
+//       picture: 'alice-johnson.jpg',
+//     },
+//     upvotes: 8,
+//     views: 100,
+//     answers: [],
+//     createdAt: new Date('2023-10-29'),
+//   },
+// ];
 
-const Home = () => {
+const Home = async () => {
+  const result = await getQuestions({});
+  const questions = result.questions;
+
+  console.log(result.questions);
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">

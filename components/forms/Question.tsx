@@ -59,6 +59,7 @@ const Question = ({ mongoDbUserId }: QuestionProps) => {
 
       router.push('/');
     } catch (error) {
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }

@@ -2,13 +2,36 @@
 
 import Question from '@/model/question.model';
 import Tag from '@/model/tag.model';
+import User from '@/model/user.model';
 import { connectToDatabase } from '../moongose';
+import { CreateQuestionParams, GetQuestionsParams } from './shared.types';
 
-export async function createQuestion(params: any) {
+export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { title, content, tags, author, path } = params;
+    const questions = await Question.find({})
+      .populate({
+        path: 'tags',
+        model: Tag,
+      })
+      .populate({
+        path: 'author',
+        model: User,
+      });
+
+    return { questions };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function createQuestion(params: CreateQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { title, content, tags, author } = params;
 
     const question = await Question.create({
       title,
