@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Metric from '../shared/Metric';
 import RenderTag from '../shared/RenderTag';
 
+// eslint-disable-next-line no-unused-vars
 interface QuestionCardProp {
   question: {
     _id: string;
@@ -23,7 +24,7 @@ interface QuestionCardProp {
   };
 }
 
-const QuestionCard = ({ question }: QuestionCardProp) => {
+const QuestionCard = ({ question }: any) => {
   const { _id, title, tags, author, upvotes, views, answers, createdAt } =
     question;
 
@@ -43,7 +44,7 @@ const QuestionCard = ({ question }: QuestionCardProp) => {
         {/* Edit Mode */}
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
-        {tags.map((tag) => (
+        {tags.map((tag: any) => (
           <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
         ))}
       </div>
